@@ -14,7 +14,7 @@
 	"author": "Sun, Xufei",
 	"license": "MIT",
 	"dependencies": {
-		"db-conn": "0.0.1",
+		"db-conn": "^0.0.2",
 		"sql.js": "^1.0.1"
 	},
 	"devDependencies": {
