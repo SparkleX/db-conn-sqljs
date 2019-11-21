@@ -8,7 +8,7 @@ describe(__filename, () => {
 		var SQL = await initSqlJs();
 		var conn:Connection = new SqlJsConnection();
 		await conn.open(SQL);
-		conn.execute("create table test (id, name);");
+		await conn.execute("create table test (id integer primary key, name);");
 		await sqlTest(conn);
 		await transactionTest(conn);
 		await conn.close();

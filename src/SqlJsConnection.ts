@@ -10,25 +10,30 @@ export class SqlJsConnection implements Connection{
 	public async open(config:any) : Promise<void> {
 		this.db = new config.Database();
 	}
-	public async execute(sql: string, params?: [any]): Promise<Result> {
-		console.log(`SqlJsConnection.execute: ${sql}`);
-		var result = await this.db.exec(sql, params);
+	public async execute(sql: string, params?: any[]): Promise<Result> {
+		console.log(`SqlJsConnection.execute: ${sql} : [${params}]`);
+	/*	if(sql.toLowerCase().startsWith("insert into")) {
+			return await this.executeInsert(sql, params);
+		}*/
+		var stmt = await this.db.prepare(sql,params);
 		let rt:Result = new Result();
-		rt.rowsAffected = this.db.getRowsModified();
-		rt.recordset = [] as any;
-		if(result.length>0) {
-			var firstResult = result[0];
-			var list  = [];
-			for(let row of firstResult.values) {
+		rt.recordset = [];
+		var isResultSet = stmt.step();
+		if(isResultSet) {
+			var columns:string[] = stmt.getColumnNames();
+			do{
 				var data = {};
-				for(var index in firstResult.columns) {
-					var colName = firstResult.columns[index]
+				var row = stmt.get();
+				for(var index in columns) {
+					var colName = columns[index]
 					data[colName] = row[index];
-				}
-				list.push(data);
-			}			
-			rt.recordset = list as any;
+				}	
+				rt.recordset.push(data);
+			}while(stmt.step());
 		}
+
+		rt.rowsAffected = this.db.getRowsModified();
+		stmt.free();
 		return rt;
 	}
 	public async close():Promise<void> {

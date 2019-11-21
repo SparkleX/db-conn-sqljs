@@ -11,7 +11,7 @@ describe(__filename, () => {
 		await pool.open(SQL);
 		var conn0:Connection = await pool.getConnection();
 		var conn1:Connection = await pool.getConnection();
-		await conn0.execute("create table test (id, name);");			
+		await conn0.execute("create table test (id integer primary key, name)");			
 		await sqlTest(conn0);
 		await sqlTest(conn1);
 		await conn0.close();
