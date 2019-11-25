@@ -1,40 +1,51 @@
-import { Connection, Result } from 'db-conn'
+import { Connection } from 'db-conn'
 import * as sqljs  from 'sql.js'
 import { } from 'sql.js';
 
 export class SqlJsConnection implements Connection{
 	private db: any;
+	private resultSet:any[];
+	private updateCount:number;
+
 	public constructor() {
 		
 	}
 	public async open(config:any) : Promise<void> {
 		this.db = new config.Database();
 	}
-	public async execute(sql: string, params?: any[]): Promise<Result> {
+	public async executeQuery(sql: string, params?: any[]): Promise<any[]> {
+		await this.execute(sql, params);
+		return this.getResultSet();
+
+	}
+	public getResultSet():any[] {
+		return this.resultSet;
+	}
+	public getUpdateCount():number {
+		return this.updateCount;
+	}
+
+	public async execute(sql: string, params?: any[]): Promise<boolean> {
 		console.log(`SqlJsConnection.execute: ${sql} : [${params}]`);
-	/*	if(sql.toLowerCase().startsWith("insert into")) {
-			return await this.executeInsert(sql, params);
-		}*/
 		var stmt = await this.db.prepare(sql,params);
-		let rt:Result = new Result();
-		rt.recordset = [];
+		this.resultSet = [];
 		var isResultSet = stmt.step();
 		if(isResultSet) {
 			var columns:string[] = stmt.getColumnNames();
 			do{
-				var data = {};
+				var data:any = {};
 				var row = stmt.get();
 				for(var index in columns) {
 					var colName = columns[index]
 					data[colName] = row[index];
 				}	
-				rt.recordset.push(data);
+				this.resultSet.push(data);
 			}while(stmt.step());
 		}
 
-		rt.rowsAffected = this.db.getRowsModified();
+		this.updateCount = this.db.getRowsModified();
 		stmt.free();
-		return rt;
+		return isResultSet;
 	}
 	public async close():Promise<void> {
 

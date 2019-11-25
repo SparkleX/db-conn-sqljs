@@ -1,0 +1,20 @@
+{
+	"$schema": "../../../node_modules/db-metadata/schema/table.json",
+	"name":"Exam",	
+	"description":"Examination",
+	"columns": [
+		{
+			"name":"id",
+			"type":"number"
+		},
+		{
+			"name":"name",
+			"type":"string",
+			"size": 64
+		},
+		{
+			"name":"examDate",
+			"type":"datetime"
+		}
+	]
+}

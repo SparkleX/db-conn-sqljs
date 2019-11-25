@@ -1,6 +1,6 @@
 {
 	"name": "db-conn-sqljs",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "SQL.JS driver (db-conn)",
 	"main": "dist/index.js",
 	"scripts": {
@@ -14,7 +14,7 @@
 	"author": "Sun, Xufei",
 	"license": "MIT",
 	"dependencies": {
-		"db-conn": "^0.0.2",
+		"db-conn": "^0.0.3",
 		"sql.js": "^1.0.1"
 	},
 	"devDependencies": {
