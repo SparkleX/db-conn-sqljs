@@ -2,10 +2,12 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
-        "outDir": "dist",
+		"outDir": "dist",
 		"noImplicitAny": true,
 		"declaration": true,
 		"sourceMap": true,
+		"strict": true,
+		"strictPropertyInitialization": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true
     },
@@ -13,7 +15,7 @@
 		"src/**/*"
     ],
     "exclude": [
-        "node_modules",
+		"node_modules",
         "**/*.spec.ts"
     ]
 }

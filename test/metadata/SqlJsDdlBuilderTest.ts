@@ -1,9 +1,9 @@
-import { ConnectionPool, Connection,DdlBuilder, Metadata, MdTable } from "db-conn"
+import { Connection,DdlBuilder, Metadata, MdTable } from "db-conn"
 import { SqlJsDdlBuilder, SqlJsConnection,initSqlJs } from "../../src/index"
 import { describe,it } from "mocha"
 import * as chai from 'chai'
 import * as fs from 'fs'
-describe(__filename, () => {
+describe(__filename, async () => {
     it("SqlJsDdlBuilder.createTable", async () => {
 		var SQL = await initSqlJs();
 		var conn:Connection = new SqlJsConnection();
