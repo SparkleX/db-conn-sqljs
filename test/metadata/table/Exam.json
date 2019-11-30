@@ -1,5 +1,5 @@
 {
-	"$schema": "../../../node_modules/db-metadata/schema/table.json",
+	"$schema": "../../../node_modules/db-conn/schema/table.json",
 	"name":"Exam",	
 	"description":"Examination",
 	"columns": [
